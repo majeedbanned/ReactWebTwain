@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/build
 /server/node_modules
 /public/dwt-resources
 /.pnp

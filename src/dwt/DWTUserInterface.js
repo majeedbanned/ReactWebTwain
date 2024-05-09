@@ -156,6 +156,7 @@ export default class DWTUserInterface extends React.Component {
                     />
                     <Suspense>
                         <DWTController
+                            page={this.props.page}
                             Dynamsoft={this.props.Dynamsoft}
                             startTime={this.props.startTime}
                             features={this.props.features}

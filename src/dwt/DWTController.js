@@ -426,6 +426,9 @@ export default class DWTController extends React.Component {
         this.setState({ bUseFileUploader: event.target.checked });
     }
     saveOrUploadImage(_type) {
+
+        console.log('inja',this.props.page)
+
         if (_type !== "local" && _type !== "server") return;
         let fileName = this.state.saveFileName + "." + this.state.saveFileFormat;
         let imagesToUpload = [];
@@ -491,14 +494,16 @@ export default class DWTController extends React.Component {
             /*window.location.port === "" ? 80 : window.location.port;
             if (this.Dynamsoft.Lib.detect.ssl === true)
                 _strPort = window.location.port === "" ? 443 : window.location.port;*/
-
-            let strActionPage = "/upload";
+        //** */ let strActionPage = "/upload";
+            let strActionPage = "/upload?folderName=" + encodeURIComponent('folderName');
             let serverUrl = protocol + window.location.hostname + ":" + _strPort + strActionPage;
             if (this.state.bUseFileUploader) {
                 var job = this.fileUploaderManager.CreateJob();
                 job.ServerUrl = serverUrl;
                 job.FileName = fileName;
                 job.ImageType = fileType;
+
+
                 this.DWObject.GenerateURLForUploadData(imagesToUpload, fileType, (resultURL, newIndices, enumImageType) => {
                     job.SourceValue.Add(resultURL, fileName);
                     job.OnUploadTransferPercentage = (job, sPercentage) => {
@@ -511,7 +516,12 @@ export default class DWTController extends React.Component {
                     this.handleException({ code: errorCode, message: errorString });
                 });
             } else
+            {
+                this.DWObject.SetHTTPHeader("Folder-Name", "folderName");
+                console.log('object to server')
                 this.DWObject.HTTPUpload(serverUrl, imagesToUpload, fileType, this.Dynamsoft.DWT.EnumDWT_UploadDataFormat.Binary, fileName, onSuccess, onFailure);
+            }
+
         }
     }
     // Tab 5: read Barcode 
@@ -653,7 +663,7 @@ export default class DWTController extends React.Component {
                             <li>
                                 <div className="divType" tabIndex="1" controlindex="1" onKeyUp={(event) => this.handleTabs(event)} onClick={(event) => this.handleTabs(event)}>
                                     <div className={this.state.shownTabs & 1 ? "mark_arrow expanded" : "mark_arrow collapsed"} ></div>
-                                    Custom Scan</div>
+                                    Custom Scan1</div>
                                 <div className="divTableStyle" style={this.state.shownTabs & 1 ? { display: "block" } : { display: "none" }}>
                                     <ul>
                                         <li>

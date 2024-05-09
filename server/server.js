@@ -13,7 +13,15 @@ app.use(function (req, res, next) {
 });
 
 app.post('/upload', function (req, res) {
+
+    // const folderName = req.headers['Folder-Name'];
+    // console.log("Folder Name: ", folderName);
+
+
     var form = new formidable.IncomingForm();
+    const folderName = req.query.folderName; 
+console.log('??>',folderName)
+
     form.parse(req, function (err, fields, files) {
         // console.log(util.inspect({
         //     fields: fields,

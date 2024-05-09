@@ -663,7 +663,7 @@ export default class DWTController extends React.Component {
                             <li>
                                 <div className="divType" tabIndex="1" controlindex="1" onKeyUp={(event) => this.handleTabs(event)} onClick={(event) => this.handleTabs(event)}>
                                     <div className={this.state.shownTabs & 1 ? "mark_arrow expanded" : "mark_arrow collapsed"} ></div>
-                                    Custom Scan1</div>
+                                    Custom Scan111</div>
                                 <div className="divTableStyle" style={this.state.shownTabs & 1 ? { display: "block" } : { display: "none" }}>
                                     <ul>
                                         <li>

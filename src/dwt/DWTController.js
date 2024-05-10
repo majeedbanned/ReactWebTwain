@@ -489,7 +489,8 @@ export default class DWTController extends React.Component {
             }
         }
         if (_type === "server") {
-            let protocol = this.Dynamsoft.Lib.detect.ssl ? "https://" : "http://"
+           //* let protocol = this.Dynamsoft.Lib.detect.ssl ? "https://" : "http://"
+           let protocol = "http://";
             let _strPort = 2020;//for testing
             /*window.location.port === "" ? 80 : window.location.port;
             if (this.Dynamsoft.Lib.detect.ssl === true)

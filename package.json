@@ -15,7 +15,7 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "ncp node_modules/dwt/dist public/dwt-resources && PORT=3001 react-scripts start",
+    "start": "ncp node_modules/dwt/dist public/dwt-resources &&  react-scripts start",
     "build": "react-scripts build && ncp node_modules/dwt/dist build/dwt-resources",
     "test": "ncp node_modules/dwt/dist public/dwt-resources && react-scripts test",
     "eject": "react-scripts eject"

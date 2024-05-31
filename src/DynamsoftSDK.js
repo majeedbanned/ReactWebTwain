@@ -165,7 +165,7 @@ export default class DWT extends React.Component {
 
                                 const test=this.decodeHashedQueryStringToObject(this.props.page);
                                 console.log(test)
-                                this.DWObject.LoadImage('/var/www/ocrweb/ReactWebTwain/server/uploaded/1717134444132.jpg', function (success) {
+                                this.DWObject.LoadImage('https://ocr.persiangulfmall.com:2020/uploaded/1717134444132.jpg', function (success) {
                                     if (success) {
                                         console.log('Document loaded successfully.');
                                     } else {

@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
 import Dynamsoft from 'dwt';
+import CryptoJS from 'crypto-js';
+import queryString from 'query-string';
 const DWTUserInterface = React.lazy(() => import('./dwt/DWTUserInterface'));
 
 export default class DWT extends React.Component {
@@ -109,7 +111,27 @@ export default class DWT extends React.Component {
                                 /**
                                  * NOTE: RemoveAll doesn't trigger bitmapchanged nor OnTopImageInTheViewChanged!!
                                  */
-                                this.DWObject.RegisterEvent("OnBitmapChanged", (changedIndex, changeType) => this.handleBufferChange(changedIndex, changeType));
+                                // this.DWObject.RegisterEvent("OnBitmapChanged", (changedIndex, changeType) => this.handleBufferChange(changedIndex, changeType));
+                               
+                                // this.DWObject.RegisterEvent('OnWebTwainReady', function () {
+                                //     console.log('startttttt1t')
+
+                                //     const DWObject =  this.DWObject.GetWebTwain('dwtcontrolContainer');
+                                //     if (DWObject) {
+                                //         console.log('starttttttt')
+                                //     //   DWObject.LoadImage('path/to/your/default/document.pdf', function (success) {
+                                //     //     if (success) {
+                                //     //       console.log('Document loaded successfully.');
+                                //     //     } else {
+                                //     //       console.log('Failed to load document.');
+                                //     //     }
+                                //     //   });
+                                //     }
+                                //   });
+                               
+                               
+                               
+                               
                                 this.DWObject.Viewer.on("topPageChanged", (index, bByScrollBar) => { 
 									if (bByScrollBar || this.DWObject.isUsingActiveX()){
 										this.go(index);
@@ -140,6 +162,16 @@ export default class DWT extends React.Component {
                                 if (Dynamsoft.Lib.env.bWin)
                                     this.DWObject.MouseShape = false;
                                 this.handleBufferChange();
+
+                                const test=this.decodeHashedQueryStringToObject(this.props.page);
+                                console.log(test)
+                                this.DWObject.LoadImage('/var/www/ocrweb/ReactWebTwain/server/uploaded/1717134444132.jpg', function (success) {
+                                    if (success) {
+                                        console.log('Document loaded successfully.');
+                                    } else {
+                                        console.log('Failed to load document.');
+                                    }
+                                });
                             }
                         }
                     },
@@ -216,6 +248,20 @@ export default class DWT extends React.Component {
         this.width = viewSize.width;
         this.height = viewSize.height;
     }
+     decodeHashedQueryStringToObject(hashedQueryString) {
+        const bytes = CryptoJS.AES.decrypt(hashedQueryString, 'your-secret-key');
+        const qs = bytes.toString(CryptoJS.enc.Utf8);
+        const decodedObject = queryString.parse(qs);
+      
+        // Convert numeric values back to numbers
+        for (let key in decodedObject) {
+          if (!isNaN(decodedObject[key])) {
+            decodedObject[key] = Number(decodedObject[key]);
+          }
+        }
+      
+        return decodedObject;
+      }
     render() {
         return (
             <div>

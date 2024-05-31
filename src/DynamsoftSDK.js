@@ -165,7 +165,11 @@ export default class DWT extends React.Component {
 
                                 const test=this.decodeHashedQueryStringToObject(this.props.page);
                                 console.log(test)
-                                this.DWObject.LoadImage('https://ocr.persiangulfmall.com:2020/uploaded/1717134444132.jpg', function (success) {
+                                this.DWObject.HTTPPort = 2020;
+                            //    DWObject.HTTPDownload("https://ocr.persiangulfmall.com", "/uploaded/1717134444132.jpg", onSuccess, onFailure);
+
+
+                                this.DWObject.HTTPDownload("https://ocr.persiangulfmall.com", "/uploaded/1717134444132.jpg", function (success) {
                                     if (success) {
                                         console.log('Document loaded successfully.');
                                     } else {

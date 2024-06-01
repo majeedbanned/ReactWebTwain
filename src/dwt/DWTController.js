@@ -521,7 +521,7 @@ export default class DWTController extends React.Component {
                 });
             } else
             {
-                this.DWObject.SetHTTPHeader("Folder-Name", "folderName");
+                this.DWObject.SetHTTPHeader("Folder-Name",  this.props.page);
                 console.log('object to server')
                 this.DWObject.HTTPUpload(serverUrl, imagesToUpload, fileType, this.Dynamsoft.DWT.EnumDWT_UploadDataFormat.Binary, fileName, onSuccess, onFailure);
             }

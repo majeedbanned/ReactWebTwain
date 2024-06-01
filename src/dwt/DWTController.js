@@ -496,7 +496,10 @@ export default class DWTController extends React.Component {
             if (this.Dynamsoft.Lib.detect.ssl === true)
                 _strPort = window.location.port === "" ? 443 : window.location.port;*/
         //** */ let strActionPage = "/upload";
-            let strActionPage = "/upload?folderName=" + encodeURIComponent('folderName');
+           // let strActionPage = "/upload?folderName=" + encodeURIComponent('folderName');
+            let strActionPage = "/upload?folderName=" +  this.props.page;
+
+           
             let serverUrl = protocol + window.location.hostname + ":" + _strPort + strActionPage;
             if (this.state.bUseFileUploader) {
                 var job = this.fileUploaderManager.CreateJob();

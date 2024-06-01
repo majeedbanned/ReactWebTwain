@@ -1,9 +1,12 @@
 var formidable = require('formidable');
 var util = require('util');
 var express = require('express');
+var cors = require('cors');
 var fs = require('fs');
 var app = express();
+app.use(cors());
 app.use(express.static(__dirname));
+
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");

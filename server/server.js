@@ -22,10 +22,10 @@ app.use(function (req, res, next) {
 const secretKey = 'your-secret-key'; // Use the same secret key as in React
 
 function decryptObject(encryptedString) {
-  const bytes = crypto.AES.decrypt(encryptedString, secretKey);
-  const decrypted = bytes.toString(crypto.enc.Utf8);
-  return JSON.parse(decrypted);
-}
+    const bytes = CryptoJS.AES.decrypt(decodeURIComponent(encryptedString), secretKey);
+    const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+    return JSON.parse(decrypted);
+  }
 function decodeHashedQueryStringToObject(hashedQueryString) {
     try {
       console.log('Hashed Query String:', hashedQueryString);

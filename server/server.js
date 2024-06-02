@@ -17,34 +17,36 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", true);
     next();
 });
+
+
 function decodeHashedQueryStringToObject(hashedQueryString) {
     try {
-        console.log('Hashed Query String:', hashedQueryString);
-        const decodedHash = decodeURIComponent(hashedQueryString);
-        console.log('Decoded Hash:', decodedHash);
-        const bytes = CryptoJS.AES.decrypt(decodedHash, 'your-secret-key');
-        const qsString = bytes.toString(CryptoJS.enc.Utf8);
-        console.log('Query String:', qsString);
-
-        if (!qsString) {
-            throw new Error('Failed to decrypt or parse the query string');
+      console.log('Hashed Query String:', hashedQueryString);
+      const decodedHash = decodeURIComponent(hashedQueryString);
+      console.log('Decoded Hash:', decodedHash);
+      const bytes = CryptoJS.AES.decrypt(decodedHash, 'your-secret-key');
+      const qsString = bytes.toString(CryptoJS.enc.Utf8);
+      console.log('Query String:', qsString);
+  
+      if (!qsString) {
+        throw new Error('Failed to decrypt or parse the query string');
+      }
+  
+      const decodedObject = qs.parse(qsString);
+  
+      // Convert numeric values back to numbers
+      for (let key in decodedObject) {
+        if (!isNaN(decodedObject[key])) {
+          decodedObject[key] = Number(decodedObject[key]);
         }
-
-        const decodedObject = qs.parse(qsString);
-
-        // Convert numeric values back to numbers
-        for (let key in decodedObject) {
-            if (!isNaN(decodedObject[key])) {
-                decodedObject[key] = Number(decodedObject[key]);
-            }
-        }
-
-        return decodedObject;
+      }
+  
+      return decodedObject;
     } catch (error) {
-        console.error('Error during decryption:', error.message);
-        throw error;
+      console.error('Error during decryption:', error.message);
+      throw error;
     }
-}
+  }
 
 
 app.post('/upload', function (req, res) {

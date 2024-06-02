@@ -18,24 +18,32 @@ app.use(function (req, res, next) {
     next();
 });
 function decodeHashedQueryStringToObject(hashedQueryString) {
-    const decodedHash = decodeURIComponent(hashedQueryString);
-    const bytes = CryptoJS.AES.decrypt(decodedHash, 'your-secret-key');
-    const qsString = bytes.toString(CryptoJS.enc.Utf8);
+    try {
+        console.log('Hashed Query String:', hashedQueryString);
+        const decodedHash = decodeURIComponent(hashedQueryString);
+        console.log('Decoded Hash:', decodedHash);
+        const bytes = CryptoJS.AES.decrypt(decodedHash, 'your-secret-key');
+        const qsString = bytes.toString(CryptoJS.enc.Utf8);
+        console.log('Query String:', qsString);
 
-    if (!qsString) {
-        throw new Error('Failed to decrypt or parse the query string');
-    }
-
-    const decodedObject = qs.parse(qsString);
-
-    // Convert numeric values back to numbers
-    for (let key in decodedObject) {
-        if (!isNaN(decodedObject[key])) {
-            decodedObject[key] = Number(decodedObject[key]);
+        if (!qsString) {
+            throw new Error('Failed to decrypt or parse the query string');
         }
-    }
 
-    return decodedObject;
+        const decodedObject = qs.parse(qsString);
+
+        // Convert numeric values back to numbers
+        for (let key in decodedObject) {
+            if (!isNaN(decodedObject[key])) {
+                decodedObject[key] = Number(decodedObject[key]);
+            }
+        }
+
+        return decodedObject;
+    } catch (error) {
+        console.error('Error during decryption:', error.message);
+        throw error;
+    }
 }
 
 

@@ -4,7 +4,8 @@ var express = require('express');
 var cors = require('cors');
 var fs = require('fs');
 const CryptoJS = require('crypto-js');
-const queryString = require('query-string');
+//const queryString = require('query-string');
+const qs = require('qs');
 var app = express();
 app.use(cors());
 app.use(express.static(__dirname));
@@ -19,24 +20,25 @@ app.use(function (req, res, next) {
 function decodeHashedQueryStringToObject(hashedQueryString) {
     const decodedHash = decodeURIComponent(hashedQueryString);
     const bytes = CryptoJS.AES.decrypt(decodedHash, 'your-secret-key');
-    const qs = bytes.toString(CryptoJS.enc.Utf8);
-  
-    if (!qs) {
-      throw new Error('Failed to decrypt or parse the query string');
+    const qsString = bytes.toString(CryptoJS.enc.Utf8);
+
+    if (!qsString) {
+        throw new Error('Failed to decrypt or parse the query string');
     }
-  
-    const decodedObject = queryString.parse(qs);
-  
+
+    const decodedObject = qs.parse(qsString);
+
     // Convert numeric values back to numbers
     for (let key in decodedObject) {
-      if (!isNaN(decodedObject[key])) {
-        decodedObject[key] = Number(decodedObject[key]);
-      }
+        if (!isNaN(decodedObject[key])) {
+            decodedObject[key] = Number(decodedObject[key]);
+        }
     }
-  
+
     return decodedObject;
-  }
-  
+}
+
+
 app.post('/upload', function (req, res) {
 
     // const folderName = req.headers['Folder-Name'];

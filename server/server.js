@@ -4,7 +4,7 @@ var express = require('express');
 var cors = require('cors');
 var fs = require('fs');
 const CryptoJS = require('crypto-js');
-const querystring = require('querystring');
+const queryString = require('query-string');
 var app = express();
 app.use(cors());
 app.use(express.static(__dirname));
@@ -25,7 +25,7 @@ function decodeHashedQueryStringToObject(hashedQueryString) {
       throw new Error('Failed to decrypt or parse the query string');
     }
   
-    const decodedObject = querystring.parse(qs);
+    const decodedObject = queryString.parse(qs);
   
     // Convert numeric values back to numbers
     for (let key in decodedObject) {

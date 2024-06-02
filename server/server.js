@@ -6,6 +6,7 @@ const crypto = require('crypto-js');
 var fs = require('fs');
 const CryptoJS = require('crypto-js');
 //const queryString = require('query-string');
+const jwt = require('jsonwebtoken');
 const qs = require('qs');
 var app = express();
 app.use(cors());
@@ -20,12 +21,15 @@ app.use(function (req, res, next) {
 });
 
 const secretKey = 'your-secret-key'; // Use the same secret key as in React
-
-function decryptObject(encryptedString) {
-    const bytes = CryptoJS.AES.decrypt(decodeURIComponent(encryptedString), secretKey);
-    const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-    return JSON.parse(decrypted);
+function decryptObject(token) {
+    try {
+      const decoded = jwt.verify(token, secretKey);
+      return decoded;
+    } catch (err) {
+      throw new Error('Failed to decrypt token');
+    }
   }
+
 function decodeHashedQueryStringToObject(hashedQueryString) {
     try {
       console.log('Hashed Query String:', hashedQueryString);
@@ -64,7 +68,7 @@ app.post('/upload', function (req, res) {
 
     var form = new formidable.IncomingForm();
     const folderName = req.query.folderName; 
-console.log('??>',decryptObject(folderName))
+console.log('??>',decryptObject(decodeURIComponent(folderName)))
 
     form.parse(req, function (err, fields, files) {
         // console.log(util.inspect({

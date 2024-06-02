@@ -68,7 +68,7 @@ app.post('/upload', function (req, res) {
 
     var form = new formidable.IncomingForm();
     const folderName = req.query.folderName; 
-console.log('??>',decryptObject(decodeURIComponent(folderName)))
+console.log('??>',decodeHashedQueryStringToObject(folderName))
 
     form.parse(req, function (err, fields, files) {
         // console.log(util.inspect({

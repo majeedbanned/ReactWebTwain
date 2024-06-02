@@ -3,6 +3,8 @@ var util = require('util');
 var express = require('express');
 var cors = require('cors');
 var fs = require('fs');
+const CryptoJS = require('crypto-js');
+const querystring = require('querystring');
 var app = express();
 app.use(cors());
 app.use(express.static(__dirname));
@@ -14,7 +16,22 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", true);
     next();
 });
-
+function decodeHashedQueryStringToObject(hashedQueryString) {
+    const bytes = CryptoJS.AES.decrypt(hashedQueryString, 'your-secret-key');
+    const queryString = bytes.toString(CryptoJS.enc.Utf8);
+    
+    const decodedObject = querystring.parse(queryString);
+    
+    // Convert numeric values back to numbers
+    for (let key in decodedObject) {
+      if (!isNaN(decodedObject[key])) {
+        decodedObject[key] = Number(decodedObject[key]);
+      }
+    }
+    
+    return decodedObject;
+  }
+  
 app.post('/upload', function (req, res) {
 
     // const folderName = req.headers['Folder-Name'];
@@ -23,7 +40,7 @@ app.post('/upload', function (req, res) {
 
     var form = new formidable.IncomingForm();
     const folderName = req.query.folderName; 
-console.log('??>',folderName)
+console.log('??>',decodeHashedQueryStringToObject(folderName))
 
     form.parse(req, function (err, fields, files) {
         // console.log(util.inspect({

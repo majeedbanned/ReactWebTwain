@@ -2,6 +2,7 @@ var formidable = require('formidable');
 var util = require('util');
 var express = require('express');
 var cors = require('cors');
+const crypto = require('crypto');
 var fs = require('fs');
 const CryptoJS = require('crypto-js');
 //const queryString = require('query-string');

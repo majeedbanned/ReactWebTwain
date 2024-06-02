@@ -17,18 +17,23 @@ app.use(function (req, res, next) {
     next();
 });
 function decodeHashedQueryStringToObject(hashedQueryString) {
-    const bytes = CryptoJS.AES.decrypt(hashedQueryString, 'your-secret-key');
-    const queryString = bytes.toString(CryptoJS.enc.Utf8);
-    
-    const decodedObject = querystring.parse(queryString);
-    
+    const decodedHash = decodeURIComponent(hashedQueryString);
+    const bytes = CryptoJS.AES.decrypt(decodedHash, 'your-secret-key');
+    const qs = bytes.toString(CryptoJS.enc.Utf8);
+  
+    if (!qs) {
+      throw new Error('Failed to decrypt or parse the query string');
+    }
+  
+    const decodedObject = querystring.parse(qs);
+  
     // Convert numeric values back to numbers
     for (let key in decodedObject) {
       if (!isNaN(decodedObject[key])) {
         decodedObject[key] = Number(decodedObject[key]);
       }
     }
-    
+  
     return decodedObject;
   }
   

@@ -497,7 +497,7 @@ export default class DWTController extends React.Component {
                 _strPort = window.location.port === "" ? 443 : window.location.port;*/
         //** */ let strActionPage = "/upload";
            // let strActionPage = "/upload?folderName=" + encodeURIComponent('folderName');
-            let strActionPage = "/upload?folderName=" +  this.props.page;
+            let strActionPage = "/upload?folderName=" + encodeURIComponent( this.props.page);
 
            
             let serverUrl = protocol + window.location.hostname + ":" + _strPort + strActionPage;

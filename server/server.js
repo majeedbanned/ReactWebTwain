@@ -2,7 +2,7 @@ var formidable = require('formidable');
 var util = require('util');
 var express = require('express');
 var cors = require('cors');
-const crypto = require('crypto');
+const crypto = require('crypto-js');
 var fs = require('fs');
 const CryptoJS = require('crypto-js');
 //const queryString = require('query-string');
@@ -19,15 +19,13 @@ app.use(function (req, res, next) {
     next();
 });
 
-const secretKey = 'your-secret-key'; // Use the same key as in React
+const secretKey = 'your-secret-key'; // Use the same secret key as in React
 
 function decryptObject(encryptedString) {
-  const decrypted = crypto.createDecipher('aes-256-cbc', secretKey);
-  let decryptedString = decrypted.update(encryptedString, 'base64', 'utf8');
-  decryptedString += decrypted.final('utf8');
-  return JSON.parse(decryptedString);
+  const bytes = crypto.AES.decrypt(encryptedString, secretKey);
+  const decrypted = bytes.toString(crypto.enc.Utf8);
+  return JSON.parse(decrypted);
 }
-
 function decodeHashedQueryStringToObject(hashedQueryString) {
     try {
       console.log('Hashed Query String:', hashedQueryString);

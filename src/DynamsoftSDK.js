@@ -163,19 +163,21 @@ export default class DWT extends React.Component {
                                     this.DWObject.MouseShape = false;
                                 this.handleBufferChange();
 
-                                const test=this.decodeHashedQueryStringToObject(this.props.page);
-                                console.log(test)
+                                const obj=this.decodeHashedQueryStringToObject(this.props.page);
+                                console.log('obj',obj)
                                 this.DWObject.HTTPPort = 2020;
                             //    DWObject.HTTPDownload("https://ocr.persiangulfmall.com", "/uploaded/1717134444132.jpg", onSuccess, onFailure);
 
-
-                                this.DWObject.HTTPDownload("https://ocr.persiangulfmall.com", "/uploaded/1717134444132.jpg", function (success) {
-                                    if (success) {
+                        if(obj.mode==='edit')
+                            {
+                                this.DWObject.HTTPDownload("https://ocr.persiangulfmall.com", "/uploaded/"+obj.name, function (success) {
+                                    if (success) {  
                                         console.log('Document loaded successfully.');
                                     } else {
                                         console.log('Failed to load document.');
                                     }
                                 });
+                            }
                             }
                         }
                     },

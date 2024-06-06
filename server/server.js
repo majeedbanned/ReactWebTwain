@@ -5,9 +5,9 @@ var cors = require('cors');
 const crypto = require('crypto-js');
 var fs = require('fs');
 const CryptoJS = require('crypto-js');
-//const queryString = require('query-string');
 const jwt = require('jsonwebtoken');
 const qs = require('qs');
+const axios = require('axios'); // For making API calls
 var app = express();
 app.use(cors());
 app.use(express.static(__dirname));
@@ -21,75 +21,93 @@ app.use(function (req, res, next) {
 });
 
 const secretKey = 'your-secret-key'; // Use the same secret key as in React
+
 function decryptObject(token) {
     try {
-      const decoded = jwt.verify(token, secretKey);
-      return decoded;
+        const decoded = jwt.verify(token, secretKey);
+        return decoded;
     } catch (err) {
-      throw new Error('Failed to decrypt token');
+        throw new Error('Failed to decrypt token');
     }
-  }
+}
 
 function decodeHashedQueryStringToObject(hashedQueryString) {
     try {
-      console.log('Hashed Query String:', hashedQueryString);
-      const decodedHash = decodeURIComponent(hashedQueryString);
-      console.log('Decoded Hash:', decodedHash);
-      const bytes = CryptoJS.AES.decrypt(decodedHash, 'your-secret-key');
-      const qsString = bytes.toString(CryptoJS.enc.Utf8);
-      console.log('Query String:', qsString);
-  
-      if (!qsString) {
-        throw new Error('Failed to decrypt or parse the query string');
-      }
-  
-      const decodedObject = qs.parse(qsString);
-  
-      // Convert numeric values back to numbers
-      for (let key in decodedObject) {
-        if (!isNaN(decodedObject[key])) {
-          decodedObject[key] = Number(decodedObject[key]);
-        }
-      }
-  
-      return decodedObject;
-    } catch (error) {
-      console.error('Error during decryption:', error.message);
-      throw error;
-    }
-  }
+       // console.log('Hashed Query String:', hashedQueryString);
+        const decodedHash = decodeURIComponent(hashedQueryString);
+      //  console.log('Decoded Hash:', decodedHash);
+        const bytes = CryptoJS.AES.decrypt(decodedHash, 'your-secret-key');
+        const qsString = bytes.toString(CryptoJS.enc.Utf8);
+        //console.log('Query String:', qsString);
 
+        if (!qsString) {
+            throw new Error('Failed to decrypt or parse the query string');
+        }
+
+        const decodedObject = qs.parse(qsString);
+
+        // Convert numeric values back to numbers
+        for (let key in decodedObject) {
+            if (!isNaN(decodedObject[key])) {
+                decodedObject[key] = Number(decodedObject[key]);
+            }
+        }
+
+        return decodedObject;
+    } catch (error) {
+        console.error('Error during decryption:', error.message);
+        throw error;
+    }
+}
 
 app.post('/upload', function (req, res) {
-
-    // const folderName = req.headers['Folder-Name'];
-    // console.log("Folder Name: ", folderName);
-
-
     var form = new formidable.IncomingForm();
-    const folderName = req.query.folderName; 
-console.log('??>',decodeHashedQueryStringToObject(folderName))
+    const folderName = req.query.folderName;
+    const obj = decodeHashedQueryStringToObject(folderName);
 
     form.parse(req, function (err, fields, files) {
-        // console.log(util.inspect({
-        //     fields: fields,
-        //     files: files
-        // }));
+        if (err) {
+            console.error('Form parse error:', err);
+            res.status(500).send('Form parse error');
+            return;
+        }
 
         fs.readFile(files.RemoteFile.path, function (err, data) {
-            // save file from temp dir to new dir
-            var newPath = __dirname + "/uploaded/" + files.RemoteFile.name;
+            if (err) {
+                console.error('Read file error:', err);
+                res.status(500).send('Read file error');
+                return;
+            }
+
+            var newPath = __dirname + "/uploaded/" + obj.name;
             fs.writeFile(newPath, data, function (err) {
-                if (err) throw err;
-                console.log('file saved');
+                let status = 'failure';
+                if (err) {
+                    console.error('File save error:', err);
+                } else {
+                    console.log('File saved as ' + obj.name);
+                    status = 'success';
+                }
                 res.end();
+               // res.status(200).send('File processed');
+
+                // Call the endpoint API with the object and status
+                // axios.post('http://your-endpoint-api-url', { ...obj, status: status })
+                //     .then(apiRes => {
+                //         console.log('API response:', apiRes.data);
+                //         res.status(200).send('File processed');
+                //     })
+                //     .catch(apiErr => {
+                //         console.error('API call error:', apiErr);
+                //         res.status(500).send('API call error');
+                //     });
             });
         });
     });
-})
+});
 
 var server = app.listen(2020, function () {
     var host = server.address().address;
     var port = server.address().port;
     console.log('listening at http://%s:%s', host, port);
-})
+});

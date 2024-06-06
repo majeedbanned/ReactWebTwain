@@ -88,19 +88,27 @@ app.post('/upload', function (req, res) {
                     console.log('File saved as ' + obj.name);
                     status = 'success';
                 }
-                res.end();
+                //res.end();
                // res.status(200).send('File processed');
 
-                // Call the endpoint API with the object and status
-                // axios.post('http://your-endpoint-api-url', { ...obj, status: status })
-                //     .then(apiRes => {
-                //         console.log('API response:', apiRes.data);
-                //         res.status(200).send('File processed');
-                //     })
-                //     .catch(apiErr => {
-                //         console.error('API call error:', apiErr);
-                //         res.status(500).send('API call error');
-                //     });
+              //  Call the endpoint API with the object and status
+              if(obj.mode==='add'){
+                axios.post('https://charge.persiangulfmall.com/api/newfile', { ...obj, status: status })
+                    .then(apiRes => {
+                        console.log('API response:', apiRes.data);
+                        res.status(200).send('File processed');
+                        res.end();
+                    })
+                    .catch(apiErr => {
+                        console.error('API call error:', apiErr);
+                        res.status(500).send('API call error');
+                        res.end();
+                    });
+                  }
+                  else{
+                    res.status(200).send('File processed');
+                    res.end();
+                  }
             });
         });
     });

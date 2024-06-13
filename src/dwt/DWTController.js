@@ -667,7 +667,7 @@ export default class DWTController extends React.Component {
                             <li>
                                 <div className="divType" tabIndex="1" controlindex="1" onKeyUp={(event) => this.handleTabs(event)} onClick={(event) => this.handleTabs(event)}>
                                     <div className={this.state.shownTabs & 1 ? "mark_arrow expanded" : "mark_arrow collapsed"} ></div>
-                                    Custom Scan111</div>
+                                    انتخاب درایور</div>
                                 <div className="divTableStyle" style={this.state.shownTabs & 1 ? { display: "block" } : { display: "none" }}>
                                     <ul>
                                         <li>
@@ -722,7 +722,7 @@ export default class DWTController extends React.Component {
                                             </ul>
                                         </li>
                                         <li className="tc">
-                                            <button tabIndex="1" className={this.state.scanners.length > 0 ? "majorButton enabled fullWidth" : "majorButton disabled fullWidth"} onClick={() => this.acquireImage()} disabled={this.state.scanners.length > 0 ? "" : "disabled"}>Scan</button>
+                                            <button tabIndex="1" className={this.state.scanners.length > 0 ? "majorButton enabled fullWidth" : "majorButton disabled fullWidth"} onClick={() => this.acquireImage()} disabled={this.state.scanners.length > 0 ? "" : "disabled"}>شروع اسکن</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -768,11 +768,11 @@ export default class DWTController extends React.Component {
                             <li>
                                 <div className="divType" tabIndex="3" controlindex="4" onClick={(event) => this.handleTabs(event)} onKeyUp={(event) => this.handleTabs(event)}>
                                     <div className={this.state.shownTabs & 4 ? "mark_arrow expanded" : "mark_arrow collapsed"} ></div>
-                                    Load Images or PDFs</div>
+                                   انتخاب دستی فایل</div>
                                 <div className="divTableStyle" style={this.state.shownTabs & 4 ? { display: "block" } : { display: "none" }}>
                                     <ul>
                                         <li className="tc">
-                                            <button tabIndex="3" className="majorButton enabled" onClick={() => this.loadImagesOrPDFs()} style={{ width: "100%" }}>Load</button>
+                                            <button tabIndex="3" className="majorButton enabled" onClick={() => this.loadImagesOrPDFs()} style={{ width: "100%" }}>بارگذاری</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -782,32 +782,32 @@ export default class DWTController extends React.Component {
                             <li>
                                 <div className="divType" tabIndex="4" controlindex="8" onClick={(event) => this.handleTabs(event)} onKeyUp={(event) => this.handleTabs(event)}>
                                     <div className={this.state.shownTabs & 8 ? "mark_arrow expanded" : "mark_arrow collapsed"} ></div>
-                                    Save Documents</div>
+                                  ذخیره سند</div>
                                 <div className="divTableStyle div_SaveImages" style={this.state.shownTabs & 8 ? { display: "block" } : { display: "none" }}>
                                     <ul>
-                                        <li>
+                                        <li style={{display:'none'}}>
                                             <label className="fullWidth"><span style={{ width: "25%" }}>File Name:</span>
                                                 <input tabIndex="4" style={{ width: "73%", marginLeft: "2%" }} type="text" size="20" value={this.state.saveFileName} onChange={(e) => this.handleFileNameChange(e)} /></label>
                                         </li>
                                         <li>
                                             <label><input tabIndex="4" type="radio" value="bmp" name="ImageType" onClick={(e) => this.handleSaveConfigChange(e)} />BMP</label>
-                                            <label><input tabIndex="4" type="radio" value="jpg" name="ImageType" defaultChecked onClick={(e) => this.handleSaveConfigChange(e)} />JPEG</label>
+                                            <label><input tabIndex="4" type="radio" value="jpg" name="ImageType"  onClick={(e) => this.handleSaveConfigChange(e)} />JPEG</label>
                                             <label><input tabIndex="4" type="radio" value="tif" name="ImageType" onClick={(e) => this.handleSaveConfigChange(e)} />TIFF</label>
                                             <label><input tabIndex="4" type="radio" value="png" name="ImageType" onClick={(e) => this.handleSaveConfigChange(e)} />PNG</label>
-                                            <label><input tabIndex="4" type="radio" value="pdf" name="ImageType" onClick={(e) => this.handleSaveConfigChange(e)} />PDF</label>
+                                            <label><input tabIndex="4" type="radio" value="pdf" name="ImageType" defaultChecked onClick={(e) => this.handleSaveConfigChange(e)} />PDF</label>
                                         </li>
                                         <li>
                                             <label><input tabIndex="4" type="checkbox"
-                                                checked={(this.state.saveFileFormat === "pdf" || this.state.saveFileFormat === "tif") && (this.state.bMulti ? "checked" : "")}
-                                                value="multiPage" disabled={(this.state.saveFileFormat === "pdf" || this.state.saveFileFormat === "tif") ? "" : "disabled"} onChange={(e) => this.handleSaveConfigChange(e)} />Upload Multiple Pages</label>
+                                                // checked={(this.state.saveFileFormat === "pdf" || this.state.saveFileFormat === "tif") && (this.state.bMulti ? "checked" : "")}
+                                                checked={true} value="multiPage" disabled={(this.state.saveFileFormat === "pdf" || this.state.saveFileFormat === "tif") ? "" : "disabled"} onChange={(e) => this.handleSaveConfigChange(e)} />Upload Multiple Pages</label>
                                             {((this.props.features & 0b10000) && (this.props.features & 0b1000000))
                                                 ? <label>
-                                                    <input tabIndex="4" title="Use Uploader" type="checkbox" onChange={(e) => this.toggleUseUploade(e)} />Use File Uploader</label>
+                                                    <input tabIndex="4"  title="Use Uploader" type="checkbox" onChange={(e) => this.toggleUseUploade(e)} />Use File Uploader</label>
                                                 : ""}
                                         </li>
                                         <li className="tc">
-                                            {(this.state.bWin && (this.props.features & 0b1000)) ? <button tabIndex="4" className={this.props.buffer.count === 0 ? "majorButton disabled width_48p" : "majorButton enabled width_48p"} disabled={this.props.buffer.count === 0 ? "disabled" : ""} onClick={() => this.saveOrUploadImage('local')} >Save to Local</button> : ""}
-                                            {(this.props.features & 0b10000) ? <button tabIndex="4" className={this.props.buffer.count === 0 ? "majorButton disabled width_48p marginL_2p" : "majorButton enabled width_4p marginL_2p"} disabled={this.props.buffer.count === 0 ? "disabled" : ""} onClick={() => this.saveOrUploadImage('server')} >Upload to Server</button> : ""}
+                                            {(this.state.bWin && (this.props.features & 0b1000)) ? <button tabIndex="4" className={this.props.buffer.count === 0 ? "majorButton disabled width_48p" : "majorButton enabled width_48p"} disabled={this.props.buffer.count === 0 ? "disabled" : ""} onClick={() => this.saveOrUploadImage('local')} >ذخیره سند در سرور</button> : ""}
+                                            {(this.props.features & 0b10000) ? <button tabIndex="4" className={this.props.buffer.count === 0 ? "majorButton disabled width_48p marginL_2p" : "majorButton enabled width_4p marginL_2p"} disabled={this.props.buffer.count === 0 ? "disabled" : ""} onClick={() => this.saveOrUploadImage('server')} >ذخیره سند در کامپیوتر</button> : ""}
                                         </li>
                                     </ul>
                                 </div>

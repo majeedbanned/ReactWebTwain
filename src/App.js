@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <a href="https://www.dynamsoft.com/Products/WebTWAIN_Overview.aspx" target="_blank" rel="noopener noreferrer" >
+        {/* <a href="https://www.dynamsoft.com/Products/WebTWAIN_Overview.aspx" target="_blank" rel="noopener noreferrer" >
           <img src={DWTLogo} className="dwt-logo" alt="Dynamic Web TWAIN Logo" />
         </a>
         <div style={{ width: "10px" }}></div>
@@ -33,17 +33,17 @@ function App() {
         <div style={{ width: "770px" }}></div>
         <a href="https://www.dynamsoft.com" target="_blank" rel="noopener noreferrer" >
           <img src={DynamsoftLogo} className="ds-logo" alt="Dynamsoft Logo" />
-        </a>
+        </a> */}
       </header>
       <br />
       <DWT
         features={[
           "scan",
-          "camera",
+        
           "load",
           "save",
           "upload",
-          "barcode",
+       
           "uploader"
         ]}
         page={page} // Passing 'page' as a prop

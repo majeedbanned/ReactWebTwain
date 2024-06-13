@@ -806,8 +806,8 @@ export default class DWTController extends React.Component {
                                                 : ""}
                                         </li>
                                         <li className="tc">
-                                            {(this.state.bWin && (this.props.features & 0b1000)) ? <button tabIndex="4" className={this.props.buffer.count === 0 ? "majorButton disabled width_48p" : "majorButton enabled width_48p"} disabled={this.props.buffer.count === 0 ? "disabled" : ""} onClick={() => this.saveOrUploadImage('local')} >ذخیره سند در سرور</button> : ""}
-                                            {(this.props.features & 0b10000) ? <button tabIndex="4" className={this.props.buffer.count === 0 ? "majorButton disabled width_48p marginL_2p" : "majorButton enabled width_4p marginL_2p"} disabled={this.props.buffer.count === 0 ? "disabled" : ""} onClick={() => this.saveOrUploadImage('server')} >ذخیره سند در کامپیوتر</button> : ""}
+                                            {(this.state.bWin && (this.props.features & 0b1000)) ? <button tabIndex="4" className={this.props.buffer.count === 0 ? "majorButton disabled width_48p" : "majorButton enabled width_48p"} disabled={this.props.buffer.count === 0 ? "disabled" : ""} onClick={() => this.saveOrUploadImage('local')} >ذخیره سند در کامپیوتر</button> : ""}
+                                            {(this.props.features & 0b10000) ? <button tabIndex="4" className={this.props.buffer.count === 0 ? "majorButton disabled width_48p marginL_2p" : "majorButton enabled width_4p marginL_2p"} disabled={this.props.buffer.count === 0 ? "disabled" : ""} onClick={() => this.saveOrUploadImage('server')} >ذخیره سند در سرور </button> : ""}
                                         </li>
                                     </ul>
                                 </div>

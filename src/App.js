@@ -4,7 +4,10 @@ import logo from './logo.svg';
 import DWTLogo from './icon-dwt.svg';
 import DynamsoftLogo from './logo-dynamsoft-white-159X39.svg';
 import './App.css';
+import queryString from 'query-string';
+
 import DWT from './DynamsoftSDK';
+import CryptoJS from 'crypto-js';
 
 // Create a functional component to use hooks
 function App() {
@@ -18,8 +21,23 @@ function App() {
   // Get the 'page' query parameter
   const page = parseQuery(location.search).get('page');
 
-  console.log('>>>>>>>>',page)
-
+  // console.log('>>>>>>>>',page)
+ const decodeHashedQueryStringToObject=(hashedQueryString)=> {
+    const bytes = CryptoJS.AES.decrypt(hashedQueryString, 'your-secret-key');
+    const qs = bytes.toString(CryptoJS.enc.Utf8);
+    const decodedObject = queryString.parse(qs);
+  
+    // Convert numeric values back to numbers
+    for (let key in decodedObject) {
+      if (!isNaN(decodedObject[key])) {
+        decodedObject[key] = Number(decodedObject[key]);
+      }
+    }
+  
+    return decodedObject;
+  }
+console.log('???',decodeHashedQueryStringToObject(page))
+  const per=decodeHashedQueryStringToObject(page)?.per
   return (
     <div className="App">
       <header className="App-header">
@@ -37,7 +55,7 @@ function App() {
       </header>
       <br />
       <DWT
-        features={[
+        features={per?[
           "scan",
         
           "load",
@@ -45,7 +63,7 @@ function App() {
           "upload",
        
           "uploader"
-        ]}
+        ]:[]}
         page={page} // Passing 'page' as a prop
       />
     </div>

@@ -55,7 +55,7 @@ console.log('???',decodeHashedQueryStringToObject(page))
       </header>
       <br />
       <DWT
-        features={per?[
+        features={per==="true"?[
           "scan",
         
           "load",

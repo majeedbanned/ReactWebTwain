@@ -61,7 +61,7 @@ export default class DWTController extends React.Component {
             saveFileName: (new Date()).getTime().toString(),
             saveFileFormat: "jpg",
             bUseFileUploader: false,
-            bMulti: false,
+            bMulti: true,
             readingBarcode: false,
             bWin: this.props.Dynamsoft.navInfo.bWin
         };

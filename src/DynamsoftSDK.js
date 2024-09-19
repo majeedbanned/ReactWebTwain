@@ -91,7 +91,7 @@ export default class DWT extends React.Component {
             });
          };
         Dynamsoft.DWT.ResourcesPath = "/dwt-resources";
-		Dynamsoft.DWT.ProductKey = 't01898AUAAFXsC6DBg6Ha+wnAIDhSzSgbw/xctBxxJVvIyCImxcT4H9rmWHjqvFzLqo+PJFzA0Am6QaZNE+6ZWl+eMNt4wrX1y6kKTivvNJR3soJTj5xAtwzTutvNMm+eoAl4L4Dtx2EHmANrLSfgE7ba6AHyAHMA82qgB9yu4vrzhXNA8q//bOjsVAWnlXfmASnjZAWnHjnHgLQJTT+utl8DwvzkHAB5gN0C3C6yS0BwBuQBdgHUoAuW4gDjLSsM';
+		Dynamsoft.DWT.ProductKey = 't01898AUAAK+LYihCgAjx3JR9onSFYA+2Oemm64AJ07h4tZEEhoptOpo89sTlzEUHPb3kshXogrEkoAtyIan4UmPsN014Q8Vev5wY4JT+TqH+Th7gxCMn0ZKmId/2lPbFDdiBNQFyPIcD4BrIuTTA25Xc2AJgAWIAYuXAFnD7FdfDB7UFUkf/udDoxACn9HfWBdLHyQOceOTUApkDTZtGt1wgXL+cEwALkFuAy4/sUiDUArAAuQCYPRDEfQHimi7T';
         let innerLoad = (UseService) => {
             this.innerLoadDWT(UseService)
                 .then(

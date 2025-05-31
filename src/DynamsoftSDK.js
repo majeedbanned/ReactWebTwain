@@ -91,7 +91,7 @@ export default class DWT extends React.Component {
             });
          };
         Dynamsoft.DWT.ResourcesPath = "/dwt-resources";
-		Dynamsoft.DWT.ProductKey = 't01948AUAAE9aWaROuVee8ymb+g0PSrsloRQ/sEH4Xorl5vdImfHkOONZcOQLXsDPUi1RDkfV1/LwP8jof+ZunGsrqzqu/KnG68rJE5wy3ik03okJTn7kJHJxaVO1VYwLAbwB7wjI8RwOACWQzlIBH73vXhkygHuAdADpnQE94PQWPvm6TF4oRpvTewU9c/IEp4x3lg0yxokJTn7k9A2yWFKrv+2aGgTly8kA7gFyCuD/I2sahGqAe4A0gGjl4Iz+AcIrKrI=;t01918AUAAIoDnl0c1e5wOsOobAUQUQI3YIIITiOTCaXSKQWEwCWDaB7fAysBrEeBxJCeCrijsYwEdeeiNKpw6Ph8+BQ+NlN7XTm1g5PtnZT2TnRw6iOniF+HYzxts9YtBToD7xXgfh12ADkQ11IAH7vNXhkSQGsAKwBra0ANON3F8eOrlAHJ39450MWpHZxs78wD0saJDk595AwBGUYxU9jtFAOC/OYkgNYAngL4/8gOAZES0BrAA0BrPLyzP8njKqQ=';
+		Dynamsoft.DWT.ProductKey = 't01948AUAAEM5h7WNqy3M3ZDho97cf/kFrUoqEnWNU0735VF9Acv8Xdj5SU2iOOePylCpPxjg/miCpQD0T7/KpsPhwC239HvG48pJE5w83skw3okTnHTLCaEE0rA528t2Lh2gCDw3gI9yOACsgXyXE/Ay++6VoQBIA1gBWLsDakD3FSH4pg5eSkYb0/8S2nPSBCePd9YNMsaJE5x0yxkaRCwsPrzW5wbBunIKgDSAuwD+fmRNg8AZIA3gBmArIs7KF2IfMfc=;t01918AUAAGJeDgY37EisVXJ5NduXQC3N0V/xa6T3vDbdvVjwUOcfViWWe3HSHmhbMqCUFmPgcqnru+Vch89RNjkrIQbZF+B5nDl5gFP6OwX9nTTAybecgF+abjtts4ybB/AEvBZA9uuwA5QD21wK4G3X3jNDAnALkAYgrTlQCzhcRb35jDIg+d8rBzo7eYBT+jvzgPRx0gAn33LGgKiDCXG1YQsI5TcnAbgFyCFA/4esCghKgFuAVIA4VfVOfzp7MeE=';
         let innerLoad = (UseService) => {
             this.innerLoadDWT(UseService)
                 .then(
